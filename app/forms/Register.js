@@ -4,7 +4,7 @@ import inputTemplate from './templates/Input';
 
 export const RegisterStruct = t.struct({
 	name: t.String,
-	email: formValidation.email,
+	user: t.String,
 	password: formValidation.password,
 	passwordConfirmation: formValidation.password
 });
@@ -19,12 +19,12 @@ export const RegisterOptions = {
 				iconName: 'account-outline'
 			}
 		},
-		email: {
+		user: {
 			template: inputTemplate,
 			config: {
-				placeholder: 'Escribe tu email',
+				placeholder: 'Escribe tu usuario',
 				iconType: 'material-community',
-				iconName: 'at'
+				iconName: 'account-circle-outline'
 			}
 		},
 		password: {

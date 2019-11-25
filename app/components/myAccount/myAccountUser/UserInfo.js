@@ -6,6 +6,7 @@ import UpdateUserInfo from './UpdateUserInfo';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
+import { getUser, logout } from '../../../auth/Auth';
 
 export default class UserInfo extends Component {
 	constructor(props) {
@@ -22,22 +23,15 @@ export default class UserInfo extends Component {
 	};
 
 	getUserInfo = () => {
-		const user = firebase.auth().currentUser;
-
-		user.providerData.forEach(userInfo => {
-			this.setState({
-				userInfo
-			});
-		});
-	};
-
-	reauthenticate = currentPassword => {
-		const user = firebase.auth().currentUser;
-		const credentials = firebase.auth.EmailAuthProvider.credential(
-			user.email,
-			currentPassword
-		);
-		return user.reauthenticateWithCredential(credentials);
+		getUser()
+			.then(userInfo => {
+				if (userInfo) {
+					this.setState({
+						userInfo
+					});
+				}
+			})
+			.catch(err => console.log(err));
 	};
 
 	checkUserAvatar = photoURL => {
@@ -47,65 +41,7 @@ export default class UserInfo extends Component {
 	};
 
 	updateUserDisplayName = async newDisplayName => {
-		const update = {
-			displayName: newDisplayName
-		};
-		await firebase.auth().currentUser.updateProfile(update);
-		this.getUserInfo();
-	};
-
-	updateUserEmail = async (newEmail, password) => {
-		this.reauthenticate(password)
-			.then(() => {
-				const user = firebase.auth().currentUser;
-				user
-					.updateEmail(newEmail)
-					.then(() => {
-						console.log('Email cambiado correctamente');
-						this.refs.toast.show(
-							'Email actualizado, vuelve a iniciar sesion',
-							50,
-							() => {
-								firebase.auth().signOut();
-							}
-						);
-					})
-					.catch(err => {
-						this.refs.toast.show(err, 1500);
-					});
-			})
-			.catch(err => {
-				this.refs.toast.show('Tu clave no es correcta', 1500);
-			});
-	};
-
-	updateUserPassword = async (currentPassword, newPassword) => {
-		this.reauthenticate(currentPassword)
-			.then(() => {
-				const user = firebase.auth().currentUser;
-				user
-					.updatePassword(newPassword)
-					.then(() => {
-						this.refs.toast.show(
-							'La clave se actualizo correctamente',
-							50,
-							() => {
-								firebase.auth().signOut();
-							}
-						);
-					})
-					.catch(() => {
-						this.refs.toast.show(
-							'Error del servidor, intentelo mas tarde',
-							1500
-						);
-					});
-			})
-			.catch(err => {
-				this.refs.toast.show('La clave ingresada no es correcta', 1500);
-			});
-		console.log(currentPassword);
-		console.log(newPassword);
+		console.log('TODO: Cambio de info del usuario');
 	};
 
 	getUpdateUserInfoComponent = userInfoData => {
@@ -114,8 +50,6 @@ export default class UserInfo extends Component {
 				<UpdateUserInfo
 					userInfo={this.state.userInfo}
 					updateUserDisplayName={this.updateUserDisplayName}
-					updateUserEmail={this.updateUserEmail}
-					updateUserPassword={this.updateUserPassword}
 				/>
 			);
 		}
@@ -185,12 +119,22 @@ export default class UserInfo extends Component {
 			});
 	};
 
+	signOut = () => {
+		logout().then(() => {
+			this.props.validateLoginStatus();
+		});
+	};
+
+	goToScreen = nameScreen => {
+		this.props.navigation.navigate(nameScreen);
+	};
+
 	render() {
 		const { displayName, email, photoURL } = this.state.userInfo;
 
 		return (
 			<View>
-				<View style={styles.viewBody}>
+				<View style={styles.bodyView}>
 					<Avatar
 						rounded
 						size='large'
@@ -209,7 +153,7 @@ export default class UserInfo extends Component {
 
 				<Button
 					title='Cerrar Sesion'
-					onPress={() => firebase.auth().signOut()}
+					onPress={() => this.signOut()}
 					buttonStyle={styles.btnSignOut}
 					titleStyle={styles.btnSignOutText}
 				/>
@@ -229,7 +173,7 @@ export default class UserInfo extends Component {
 }
 
 const styles = StyleSheet.create({
-	viewBody: {
+	bodyView: {
 		alignItems: 'center',
 		justifyContent: 'center',
 		flexDirection: 'row',

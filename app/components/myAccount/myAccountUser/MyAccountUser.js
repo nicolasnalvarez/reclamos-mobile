@@ -10,9 +10,10 @@ export default class MyAccountUser extends Component {
 	}
 
 	render() {
+		const { validateLoginStatus } = this.props;
 		return (
 			<View style={styles.userAccountView}>
-				<UserInfo />
+				<UserInfo validateLoginStatus={validateLoginStatus} />
 			</View>
 		);
 	}

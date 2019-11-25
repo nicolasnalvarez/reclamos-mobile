@@ -1,14 +1,27 @@
 import { AsyncStorage } from 'react-native';
 
-const LOGGED_IN = 'loggued_in';
+const USER_LOGGED_IN = 'user_loggued_in';
 
-export const login = () => AsyncStorage.setItem(LOGGED_IN, 'true');
+export const login = async userData =>
+	await AsyncStorage.setItem(USER_LOGGED_IN, JSON.stringify(userData));
 
-export const logout = () => AsyncStorage.removeItem(LOGGED_IN);
+export const logout = async () => await AsyncStorage.removeItem(USER_LOGGED_IN);
+
+export const getUser = async () => {
+	return await AsyncStorage.getItem(USER_LOGGED_IN)
+		.then(res => {
+			console.log('entro al then');
+
+			return JSON.parse(res);
+		})
+		.catch(err => {
+			console.log('entro al catch');
+		});
+};
 
 export const estaLogueado = () => {
 	return new Promise((resolve, reject) => {
-		AsyncStorage.getItem(LOGGED_IN)
+		AsyncStorage.getItem(USER_LOGGED_IN)
 			.then(res => {
 				if (res !== null) {
 					resolve(true);

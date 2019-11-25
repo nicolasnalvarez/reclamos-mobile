@@ -15,8 +15,19 @@ export default class MyAccount extends Component {
 	}
 
 	componentDidMount() {
+		this.validateLoginStatus();
+	}
+
+	goToLoginScreen = () => {
+		this.props.navigation.navigate('Login', {
+			validateLoginStatus: this.validateLoginStatus
+		});
+	};
+
+	validateLoginStatus = () => {
 		estaLogueado()
 			.then(res => {
+				console.log('Pantalla de cuenta. Esta logueado? ', res);
 				if (res) {
 					this.setState({
 						login: true
@@ -30,19 +41,15 @@ export default class MyAccount extends Component {
 			.catch(err => {
 				console.log(err);
 			});
-	}
-
-	goToScreen = nameScreen => {
-		this.props.navigation.navigate(nameScreen);
 	};
 
 	render() {
 		const { login } = this.state;
 
 		if (login) {
-			return <MyAccountUser />;
+			return <MyAccountUser validateLoginStatus={this.validateLoginStatus} />;
 		} else {
-			return <MyAccountGuest goToScreen={this.goToScreen} />;
+			return <MyAccountGuest goToLoginScreen={this.goToLoginScreen} />;
 		}
 	}
 }

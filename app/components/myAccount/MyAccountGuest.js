@@ -1,16 +1,14 @@
-//import liraries
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Button, Image } from 'react-native-elements';
 
-// create a component
 export default class MyAccountGuest extends Component {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
-		const { goToScreen } = this.props;
+		const { goToLoginScreen } = this.props;
 
 		return (
 			<View style={styles.container}>
@@ -29,7 +27,7 @@ export default class MyAccountGuest extends Component {
 					title='Loguearme'
 					buttonStyle={styles.btnLogin}
 					onPress={() => {
-						goToScreen('Login');
+						goToLoginScreen();
 					}}
 				/>
 			</View>

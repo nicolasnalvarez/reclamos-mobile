@@ -25,37 +25,7 @@ export default class UpdateUserInfo extends Component {
 						this.openOverlay(
 							'Nombre y Apellido',
 							this.updateUserDisplayName,
-							props.userInfo.displayName
-						)
-				},
-				{
-					title: 'Cambiar email',
-					iconType: 'material-community',
-					iconNameLeft: 'at',
-					iconColorLeft: '#ccc',
-					iconNameRight: 'chevron-right',
-					iconColorRight: '#ccc',
-					onPress: () =>
-						this.openOverlayTwoInputs(
-							'Email',
-							'Clave',
-							props.userInfo.email,
-							this.updateUserEmail
-						)
-				},
-				{
-					title: 'Cambiar clave',
-					iconType: 'material-community',
-					iconNameLeft: 'lock-reset',
-					iconColorLeft: '#ccc',
-					iconNameRight: 'chevron-right',
-					iconColorRight: '#ccc',
-					onPress: () =>
-						this.openOverlayThreeInputs(
-							'Clave actual',
-							'Nueva clave',
-							'Repetir nueva clave',
-							this.updateUserPassword
+							props.userInfo.nombre
 						)
 				}
 			]
@@ -79,84 +49,6 @@ export default class UpdateUserInfo extends Component {
 					placeholder={placeholder}
 					updateFunction={updateFunction}
 					inputValue={inputValue}
-				/>
-			)
-		});
-	};
-
-	updateUserEmail = async (newEmail, password) => {
-		const emailOld = this.props.userInfo.email;
-		if (emailOld != newEmail && password) {
-			this.state.updateUserEmail(newEmail, password);
-		}
-		this.setState({
-			overlayComponent: null
-		});
-	};
-
-	openOverlayTwoInputs = (
-		placeholderOne,
-		placeholderTwo,
-		inputValueOne,
-		updateFunction
-	) => {
-		this.setState({
-			overlayComponent: (
-				<OverlayTwoInputs
-					overlayIsVisible={true}
-					placeholderOne={placeholderOne}
-					placeholderTwo={placeholderTwo}
-					inputValueOne={inputValueOne}
-					inputValueTwo=''
-					isPassword={true}
-					updateFunction={updateFunction}
-				/>
-			)
-		});
-	};
-
-	updateUserPassword = async (
-		currentPassword,
-		newPassword,
-		newPasswordConfirmation
-	) => {
-		if (currentPassword && newPasswordConfirmation && newPasswordConfirmation) {
-			if (newPassword === newPasswordConfirmation) {
-				if (currentPassword === newPassword) {
-					this.refs.toast.show('La nueva clave debe ser distinta a la actual');
-				} else {
-					this.state.updateUserPassword(currentPassword, newPassword);
-				}
-			} else {
-				this.refs.toast.show('La clave actual y la repetida no son iguales');
-			}
-		} else {
-			this.refs.toast.show('Tienes que completar todos los campos');
-		}
-
-		this.setState({
-			overlayComponent: null
-		});
-	};
-
-	openOverlayThreeInputs = (
-		placeholderOne,
-		placeholderTwo,
-		placeholderThree,
-		updateFunction
-	) => {
-		this.setState({
-			overlayComponent: (
-				<OverlayThreeInputs
-					overlayIsVisible={true}
-					placeholderOne={placeholderOne}
-					placeholderTwo={placeholderTwo}
-					placeholderThree={placeholderThree}
-					inputValueOne=''
-					inputValueTwo=''
-					inputValueThree=''
-					isPassword={true}
-					updateFunction={updateFunction}
 				/>
 			)
 		});

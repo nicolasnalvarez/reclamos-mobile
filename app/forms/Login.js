@@ -3,7 +3,7 @@ import formValidation from '../utils/Validation';
 import inputTemplate from './templates/Input';
 
 export const LoginStruct = t.struct({
-	user: formValidation.user,
+	user: t.String,
 	password: formValidation.password
 });
 
