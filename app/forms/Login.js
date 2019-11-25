@@ -3,24 +3,24 @@ import formValidation from '../utils/Validation';
 import inputTemplate from './templates/Input';
 
 export const LoginStruct = t.struct({
-	email: formValidation.email,
+	user: formValidation.user,
 	password: formValidation.password
 });
 
 export const LoginOptions = {
 	fields: {
-		email: {
+		user: {
 			template: inputTemplate,
 			config: {
-				placeholder: 'Escribe tu email',
+				placeholder: 'Escribe tu usuario',
 				iconType: 'material-community',
-				iconName: 'at'
+				iconName: 'account-circle-outline'
 			}
 		},
 		password: {
 			template: inputTemplate,
 			config: {
-				placeholder: 'Escribe un password',
+				placeholder: 'Escribe tu password',
 				iconType: 'material-community',
 				iconName: 'lock-outline',
 				password: true,

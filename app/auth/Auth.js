@@ -1,12 +1,14 @@
 import { AsyncStorage } from 'react-native';
 
-export const login = nombre => AsyncStorage.setItem(nombre, 'true');
+const LOGGED_IN = 'loggued_in';
 
-export const logout = nombre => AsyncStorage.removeItem(nombre);
+export const login = () => AsyncStorage.setItem(LOGGED_IN, 'true');
 
-export const estaLogueado = nombre => {
+export const logout = () => AsyncStorage.removeItem(LOGGED_IN);
+
+export const estaLogueado = () => {
 	return new Promise((resolve, reject) => {
-		AsyncStorage.getItem(nombre)
+		AsyncStorage.getItem(LOGGED_IN)
 			.then(res => {
 				if (res !== null) {
 					resolve(true);

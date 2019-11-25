@@ -7,8 +7,6 @@ import { Button, Image } from 'react-native-elements';
 export default class MyAccountGuest extends Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {};
 	}
 
 	render() {
@@ -17,20 +15,19 @@ export default class MyAccountGuest extends Component {
 		return (
 			<View style={styles.container}>
 				<Image
-					source={require('../../../assets/img/image-my-account-guest-01.jpg')}
+					source={require('../../../assets/img/perfil-logout.jpg')}
 					style={styles.logo}
 					PlaceholderContent={<ActivityIndicator />}
-					resizeMode="contain"
+					resizeMode='contain'
 				/>
-				<Text style={styles.title}>Consulta tu perfil de 5 tenedores</Text>
+				<Text style={styles.title}>Logueate para ver tu perfil</Text>
 				<Text style={styles.description}>
-					¿Como describirias tu mejor restaurante? Busca y visualiza los mejores
-					restaurantes de una forma sencilla. Vota cual te ha gustado mas y
-					comenta como ha sido tu experiencia
+					Para poder realizar un reclamo, ver tus reclamos creados y más, debes
+					estar logueado
 				</Text>
 				<Button
-					title="Ver tu perfil"
-					buttonStyle={styles.btnViewProfile}
+					title='Loguearme'
+					buttonStyle={styles.btnLogin}
 					onPress={() => {
 						goToScreen('Login');
 					}}
@@ -63,7 +60,7 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		marginBottom: 20
 	},
-	btnViewProfile: {
+	btnLogin: {
 		width: '100%',
 		backgroundColor: '#00a680'
 	}

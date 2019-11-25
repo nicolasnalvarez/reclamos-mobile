@@ -23,9 +23,7 @@ export default class Restaurants extends Component {
 
 		this.state = {
 			login: false,
-			restaurants: null,
-			restaurantsOffset: null,
-			restaurantsLimit: 8,
+			reclamos: null,
 			isLoading: true
 		};
 	}
@@ -60,8 +58,8 @@ export default class Restaurants extends Component {
 				<ActionButton
 					buttonColor='#00a680'
 					onPress={() => {
-						this.props.navigation.navigate('AddRestaurant', {
-							loadRestaurants: this.loadReclamos
+						this.props.navigation.navigate('AgregarReclamo', {
+							loadReclamos: this.loadReclamos
 						});
 					}}
 				/>
@@ -71,8 +69,11 @@ export default class Restaurants extends Component {
 	};
 
 	loadReclamos = async () => {
-		const { restaurantsLimit } = this.state;
+		const { reclamosLimit: restaurantsLimit } = this.state;
 		let result = [];
+
+		//fetch(config.MIS_RECLAMOS_PATH + )
+
 		const restaurants = db
 			.collection('restaurantes')
 			.orderBy('createdAt', 'desc')
@@ -96,10 +97,13 @@ export default class Restaurants extends Component {
 	};
 
 	handleMoreRestaurantsLoader = async () => {
-		const { restaurantsLimit, restaurantsOffset } = this.state;
+		const {
+			reclamosLimit: restaurantsLimit,
+			reclamosOffset: restaurantsOffset
+		} = this.state;
 		let result = [];
 
-		this.state.restaurants.forEach(doc => {
+		this.state.reclamos.forEach(doc => {
 			result.push(doc);
 		});
 
@@ -221,7 +225,7 @@ export default class Restaurants extends Component {
 	};
 
 	render() {
-		const { restaurants } = this.state;
+		const { reclamos: restaurants } = this.state;
 
 		return (
 			<View style={styles.viewBody}>

@@ -137,7 +137,7 @@ const RootStack = createBottomTabNavigator(
 		}
 	},
 	{
-		initialRouteName: 'Reclamos',
+		initialRouteName: 'MyAccount',
 		tabBarOptions: {
 			inactiveTintColor: '#646464',
 			activeTintColor: '#00a680'
