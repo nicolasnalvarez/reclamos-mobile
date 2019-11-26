@@ -33,7 +33,7 @@ const reclamosScreenStack = createStackNavigator({
 	Reclamo: {
 		screen: ReclamoScreen,
 		navigationOptions: ({ navigation }) => ({
-			title: navigation.state.params.restaurant.item.restaurant.name
+			title: 'Reclamo' + navigation.state.params.reclamo.item.reclamo.id
 		})
 	}
 });
@@ -85,7 +85,7 @@ const RootStack = createBottomTabNavigator(
 				tabBarLabel: 'Reclamos',
 				tabBarIcon: ({ tintColor }) => (
 					<Icon
-						name='file-document'
+						name='file-document-outline'
 						type='material-community'
 						size={22}
 						color={tintColor}
@@ -137,7 +137,7 @@ const RootStack = createBottomTabNavigator(
 		}
 	},
 	{
-		initialRouteName: 'MyAccount',
+		initialRouteName: 'Reclamos',
 		tabBarOptions: {
 			inactiveTintColor: '#646464',
 			activeTintColor: '#00a680'

@@ -10,12 +10,10 @@ export const logout = async () => await AsyncStorage.removeItem(USER_LOGGED_IN);
 export const getUser = async () => {
 	return await AsyncStorage.getItem(USER_LOGGED_IN)
 		.then(res => {
-			console.log('entro al then');
-
 			return JSON.parse(res);
 		})
 		.catch(err => {
-			console.log('entro al catch');
+			console.log(err);
 		});
 };
 

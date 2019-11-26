@@ -2,14 +2,14 @@ import t from 'tcomb-form-native';
 import inputTemplate from './templates/Input';
 import textAreaTemplate from './templates/TextArea';
 
-export const AddRestaurantStruct = t.struct({
+export const AgregarReclamoStruct = t.struct({
 	name: t.String,
 	city: t.String,
 	address: t.String,
 	description: t.String
 });
 
-export const AddRestaurantOptions = {
+export const AgregarReclamoOptions = {
 	fields: {
 		name: {
 			template: inputTemplate,

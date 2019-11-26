@@ -5,18 +5,20 @@ import { Image, Icon, ListItem } from 'react-native-elements';
 export default class Restaurant extends Component {
 	constructor(props) {
 		super(props);
-
-		this.state = {};
 	}
 
 	render() {
 		const {
-			name,
-			city,
-			address,
-			description,
-			image
-		} = this.props.navigation.state.params.restaurant.item.restaurant;
+			id,
+			estado,
+			nombreEdificio,
+			direccionEdificio,
+			numeroUnidad,
+			pisoUnidad,
+			ubicacion,
+			descripcion,
+			imagePaths
+		} = this.props.navigation.state.params.reclamo.item.reclamo;
 
 		const listExtraInfo = [
 			{

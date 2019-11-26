@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import t from 'tcomb-form-native';
 import {
-	AddRestaurantStruct,
-	AddRestaurantOptions
-} from '../../forms/AddRestaurant';
+	AgregarReclamoStruct,
+	AgregarReclamoOptions
+} from '../../forms/AgregarReclamo';
 import { Icon, Image, Button, Text, Overlay } from 'react-native-elements';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
@@ -17,7 +17,7 @@ import 'firebase/firestore';
 const Form = t.form.Form;
 const db = firebase.firestore(firebaseApp);
 
-export default class AddRestaurant extends Component {
+export default class AgregarReclamo extends Component {
 	constructor(props) {
 		super(props);
 
@@ -151,8 +151,8 @@ export default class AddRestaurant extends Component {
 				<View>
 					<Form
 						ref='addRestaurantForm'
-						type={AddRestaurantStruct}
-						options={AddRestaurantOptions}
+						type={AgregarReclamoStruct}
+						options={AgregarReclamoOptions}
 						value={this.state.formData}
 						onChange={formValue => this.onChangeAddFormRestaurant(formValue)}
 					/>
@@ -187,7 +187,8 @@ export default class AddRestaurant extends Component {
 						overlayStyle={styles.loadingOverlay}
 						isVisible={loading}
 						width='auto'
-						height='auto'>
+						height='auto'
+					>
 						<View>
 							<Text style={styles.loadingOverlayText}>Creando Restaurante</Text>
 							<ActivityIndicator size='large' color='#00a680' />

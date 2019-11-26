@@ -3,28 +3,28 @@ import formValidation from '../utils/Validation';
 import inputTemplate from './templates/Input';
 
 export const RegisterStruct = t.struct({
-	name: t.String,
 	user: t.String,
+	dni: t.String,
 	password: formValidation.password,
 	passwordConfirmation: formValidation.password
 });
 
 export const RegisterOptions = {
 	fields: {
-		name: {
-			template: inputTemplate,
-			config: {
-				placeholder: 'Escribe un nombre y apellido',
-				iconType: 'material-community',
-				iconName: 'account-outline'
-			}
-		},
 		user: {
 			template: inputTemplate,
 			config: {
 				placeholder: 'Escribe tu usuario',
 				iconType: 'material-community',
 				iconName: 'account-circle-outline'
+			}
+		},
+		dni: {
+			template: inputTemplate,
+			config: {
+				placeholder: 'Escribe tu DNI',
+				iconType: 'material-community',
+				iconName: 'book-open-outline'
 			}
 		},
 		password: {
