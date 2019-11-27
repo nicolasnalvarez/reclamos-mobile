@@ -7,9 +7,22 @@ export default class Restaurant extends Component {
 		super(props);
 	}
 
+	getImagenReclamo = imagePaths => {
+		if (imagePaths && imagePaths.length > 0) {
+			return imagePaths[0];
+		} else {
+			return 'https://www.todointeriores.com/wp-content/uploads/2019/04/Une-atmosphe%CC%80re-de%CC%81co-2019-Rivassoux-Murs-1-1.jpg';
+		}
+	};
+
+	formatearZonaReclamo = zonaReclamo => {
+		if (zonaReclamo) {
+			return <Text style={styles.unidadReclamo}>Zona: {ubicacion}</Text>;
+		}
+	};
+
 	render() {
 		const {
-			id,
 			estado,
 			nombreEdificio,
 			direccionEdificio,
@@ -22,7 +35,7 @@ export default class Restaurant extends Component {
 
 		const listExtraInfo = [
 			{
-				text: `${city}, ${address}`,
+				text: `${direccionEdificio}`,
 				iconName: 'map-marker',
 				iconType: 'material-community',
 				action: null
@@ -33,26 +46,28 @@ export default class Restaurant extends Component {
 			<View style={styles.viewBody}>
 				<View style={styles.imageView}>
 					<Image
-						source={{ uri: image }}
+						source={{ uri: this.getImagenReclamo(imagePaths) }}
 						PlaceholderContent={<ActivityIndicator />}
-						style={styles.restaurantImage}
+						style={styles.imagenReclamo}
 					/>
 				</View>
-				<View style={styles.restaurantInfoView}>
-					<Text style={styles.restaurantName}>{name}</Text>
-					<Text style={styles.restaurantDescription}>{description}</Text>
-				</View>
-				<View style={styles.restaurantExtraInfoView}>
-					<Text style={styles.restaurantExtraInfoTitle}>
-						Informacion sobre el restaurante
+				<View style={styles.InfoReclamoView}>
+					<Text style={styles.edificioReclamo}>Edificio: {nombreEdificio}</Text>
+					<View style={styles.restaurantExtraInfoView}>
+						{listExtraInfo.map((item, index) => (
+							<ListItem
+								key={index}
+								title={item.text}
+								leftIcon={<Icon name={item.iconName} type={item.iconType} />}
+							/>
+						))}
+					</View>
+					<Text style={styles.unidadReclamo}>
+						Piso {pisoUnidad}, unidad {numeroUnidad}
 					</Text>
-					{listExtraInfo.map((item, index) => (
-						<ListItem
-							key={index}
-							title={item.text}
-							leftIcon={<Icon name={item.iconName} type={item.iconType} />}
-						/>
-					))}
+					{this.formatearZonaReclamo(ubicacion)}
+					<Text style={styles.unidadReclamo}>Estado: {estado}</Text>
+					<Text style={styles.descripcionReclamo}>{descripcion}</Text>
 				</View>
 			</View>
 		);
@@ -66,20 +81,24 @@ const styles = StyleSheet.create({
 	imageView: {
 		width: '100%'
 	},
-	restaurantImage: {
+	imagenReclamo: {
 		width: '100%',
 		height: 200,
 		resizeMode: 'cover'
 	},
-	restaurantInfoView: {
+	InfoReclamoView: {
 		margin: 15
 	},
-	restaurantName: {
+	edificioReclamo: {
 		fontSize: 20,
 		fontWeight: 'bold'
 	},
-	restaurantDescription: {
+	descripcionReclamo: {
 		marginTop: 5,
+		color: 'grey'
+	},
+	unidadReclamo: {
+		paddingTop: 2,
 		color: 'grey'
 	},
 	restaurantExtraInfoView: {

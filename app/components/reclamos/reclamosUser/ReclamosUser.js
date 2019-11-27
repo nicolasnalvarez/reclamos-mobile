@@ -12,7 +12,7 @@ import { Image } from 'react-native-elements';
 import config from '../../../utils/Config';
 import { estaLogueado, getUser } from '../../../auth/Auth';
 
-export default class Restaurants extends Component {
+export default class ReclamosUser extends Component {
 	constructor(props) {
 		super(props);
 
@@ -45,19 +45,20 @@ export default class Restaurants extends Component {
 
 	loadActionButton = () => {
 		const { login } = this.state;
-		if (login) {
-			return (
-				<ActionButton
-					buttonColor='#00a680'
-					onPress={() => {
-						this.props.navigation.navigate('AgregarReclamo', {
-							loadReclamos: this.loadReclamos
-						});
-					}}
-				/>
-			);
-		}
-		return null;
+
+		//if (login) {
+		return (
+			<ActionButton
+				buttonColor='#00a680'
+				onPress={() => {
+					this.props.navigate('AgregarReclamo', {
+						loadReclamos: this.loadReclamos
+					});
+				}}
+			/>
+		);
+		//}
+		//return null;
 	};
 
 	loadReclamos = async () => {
@@ -68,8 +69,6 @@ export default class Restaurants extends Component {
 				fetch(config.MIS_RECLAMOS_PATH + '/' + user.dni)
 					.then(res => res.json())
 					.then(reclamos => {
-						console.log(reclamos);
-
 						if (reclamos.status == 500) {
 							this.setState({
 								sinReclamos: true
@@ -81,7 +80,6 @@ export default class Restaurants extends Component {
 							this.setState({
 								reclamos: result
 							});
-							console.log(result);
 						}
 					})
 					.catch(err =>
@@ -93,9 +91,15 @@ export default class Restaurants extends Component {
 			});
 	};
 
-	renderRow = reclamo => {
-		console.log('Info del reclamo a mostrar en renderRow: ', reclamo);
+	getImagenReclamo = imagePaths => {
+		if (imagePaths && imagePaths.length > 0) {
+			return imagePaths[0];
+		} else {
+			return 'https://www.todointeriores.com/wp-content/uploads/2019/04/Une-atmosphe%CC%80re-de%CC%81co-2019-Rivassoux-Murs-1-1.jpg';
+		}
+	};
 
+	renderRow = reclamo => {
 		const {
 			id,
 			estado,
@@ -115,19 +119,24 @@ export default class Restaurants extends Component {
 						<Image
 							resizeMode='cover'
 							source={{
-								uri:
-									'https://unimate.com.ar/wp-content/uploads/2018/05/living-3.jpg'
+								uri: this.getImagenReclamo(imagePaths)
 							}}
 							style={styles.imagenReclamo}
 						/>
 					</View>
 					<View>
-						<Text style={styles.restaurantName}>{name}</Text>
-						<Text style={styles.restaurantCityAddress}>
-							{city},{address}
+						<Text style={styles.idReclamo}>Reclamo N°{id}</Text>
+						<Text style={styles.edificioReclamo}>
+							Edificio: {nombreEdificio}, {direccionEdificio}
+						</Text>
+						<Text style={styles.unidadReclamo}>
+							Piso {pisoUnidad}, unidad {numeroUnidad}
 						</Text>
 						<Text style={styles.descripcionReclamo}>
 							{this.formatDescription(descripcion)}
+						</Text>
+						<Text style={styles.estadoReclamo}>
+							Estado: <Text style={styles.valorEstado}>{estado}</Text>
 						</Text>
 					</View>
 				</View>
@@ -165,7 +174,7 @@ export default class Restaurants extends Component {
 	};
 
 	renderReclamo = reclamo => {
-		this.props.navigation.navigate('Reclamo', { reclamo });
+		this.props.navigate('Reclamo', { reclamo });
 	};
 
 	render() {
@@ -198,23 +207,37 @@ const styles = StyleSheet.create({
 		margin: 10
 	},
 	imagenReclamo: {
-		width: 80,
-		height: 80
+		width: 120,
+		height: 120
 	},
 	imagenReclamoView: {
 		marginRight: 15
 	},
-	restaurantName: {
+	idReclamo: {
 		fontWeight: 'bold'
 	},
-	restaurantCityAddress: {
+	edificioReclamo: {
+		paddingTop: 2,
+		color: 'grey',
+		width: 220
+	},
+	unidadReclamo: {
 		paddingTop: 2,
 		color: 'grey'
 	},
 	descripcionReclamo: {
 		paddingTop: 2,
 		color: 'grey',
-		width: 200
+		width: 220
+	},
+	estadoReclamo: {
+		paddingTop: 2,
+		color: 'grey',
+		flexDirection: 'column-reverse'
+	},
+	valorEstado: {
+		paddingTop: 2,
+		fontWeight: 'bold'
 	},
 	restaurantsLoaderFooter: {
 		marginTop: 10,

@@ -22,12 +22,11 @@ export default class AgregarReclamo extends Component {
 		super(props);
 
 		this.state = {
-			restaurantImageUri: '',
+			URIImagenReclamo: '',
 			formData: {
-				name: '',
-				city: '',
-				address: '',
-				description: ''
+				documento: '',
+				ubicacion: '',
+				descripcion: ''
 			},
 			loading: false
 		};
@@ -62,7 +61,7 @@ export default class AgregarReclamo extends Component {
 				this.refs.toast.show('Has cerrado la galeria', 1500);
 			} else {
 				this.setState({
-					restaurantImageUri: result.uri
+					URIImagenReclamo: result.uri
 				});
 			}
 		}
@@ -75,10 +74,15 @@ export default class AgregarReclamo extends Component {
 	};
 
 	addRestaurant = () => {
-		const { restaurantImageUri } = this.state;
-		const { name, city, address, description } = this.state.formData;
+		const { URIImagenReclamo } = this.state;
+		const {
+			documento: name,
+			ubicacion: city,
+			address,
+			descripcion: description
+		} = this.state.formData;
 
-		if (restaurantImageUri && name && city && address && description) {
+		if (URIImagenReclamo && name && city && address && description) {
 			this.setState({
 				loading: true
 			});
@@ -94,7 +98,7 @@ export default class AgregarReclamo extends Component {
 				.then(res => {
 					const restaurantId = res.id;
 
-					uploadImage(restaurantImageUri, restaurantId, 'restaurantes')
+					uploadImage(URIImagenReclamo, restaurantId, 'restaurantes')
 						.then(res => {
 							const restaurantRef = db
 								.collection('restaurantes')
@@ -110,7 +114,7 @@ export default class AgregarReclamo extends Component {
 										'Restaurante creado correctamente',
 										100,
 										() => {
-											this.props.navigation.state.params.loadRestaurants();
+											this.props.navigation.state.params.loadReclamos();
 											this.props.navigation.goBack();
 										}
 									);
@@ -141,7 +145,10 @@ export default class AgregarReclamo extends Component {
 	};
 
 	render() {
-		const { restaurantImageUri, loading } = this.state;
+		const {
+			restaurantImageURIImagenReclamo: restaurantImageUri,
+			loading
+		} = this.state;
 
 		return (
 			<View style={styles.viewBody}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon } from 'react-native-elements';
 import {
 	createStackNavigator,
@@ -21,7 +21,10 @@ const reclamosScreenStack = createStackNavigator({
 	Reclamos: {
 		screen: ReclamosScreen,
 		navigationOptions: ({ navigation }) => ({
-			title: 'Reclamos'
+			title: 'Reclamos',
+			login: props => {
+				setLoginState();
+			}
 		})
 	},
 	AgregarReclamo: {
@@ -33,7 +36,7 @@ const reclamosScreenStack = createStackNavigator({
 	Reclamo: {
 		screen: ReclamoScreen,
 		navigationOptions: ({ navigation }) => ({
-			title: 'Reclamo' + navigation.state.params.reclamo.item.reclamo.id
+			title: 'Reclamo N° ' + navigation.state.params.reclamo.item.reclamo.id
 		})
 	}
 });

@@ -6,7 +6,7 @@ import { estaLogueado } from '../../auth/Auth';
 export default class Reclamos extends Component {
 	constructor(props) {
 		super(props);
-
+		console.log(props);
 		this.state = {
 			login: false
 		};
@@ -44,7 +44,7 @@ export default class Reclamos extends Component {
 		const { login } = this.state;
 
 		if (login) {
-			return <ReclamosUser />;
+			return <ReclamosUser navigate={this.props.navigation.navigate} />;
 		} else {
 			return <ReclamosGuest goToLoginScreen={this.goToLoginScreen} />;
 		}
