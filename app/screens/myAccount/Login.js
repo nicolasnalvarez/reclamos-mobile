@@ -19,8 +19,8 @@ class Login extends Component {
 			loginStruct: LoginStruct,
 			loginOptions: LoginOptions,
 			loginData: {
-				user: '',
-				password: ''
+				user: 'test2',
+				password: 'a123456b'
 			},
 			loginErrorMessage: ''
 		};
@@ -58,26 +58,44 @@ class Login extends Component {
 				})
 				.then(response => {
 					if (response) {
-						login(response)
-							.then(() => {
-								this.refs.toastLogin.show('Login correcto', 2500, () => {
-									navigation.state.params.validateLoginStatus();
-									this.props.navigation.goBack();
-								});
-							})
-							.catch(err => {
-								this.refs.toastLogin.show(
-									'Hubo un error al registrar la informacion del usuario',
-									2500
-								);
-							});
+
+                        this.props.login(response)
+                            .then(() => {
+                                this.refs.toastLogin.show('Login correcto', 2500, () => {
+                                    navigation.state.params.validateLoginStatus();
+                                    this.props.navigation.goBack();
+                                });
+                            })
+                            .catch((error) => {
+                                this.setState({ error })
+                                this.refs.toastLogin.show(
+                                    'Hubo un error al registrar la informacion del usuario',
+                                    2500
+                                );
+                            });
+
+						// login(response)
+						// 	.then(() => {
+                        //         this.refs.toastLogin.show('Login correcto', 2500, () => {
+                        //             navigation.state.params.validateLoginStatus();
+                        //             this.props.navigation.goBack();
+                        //         });
+						// 	})
+						// 	.catch(err => {
+                        //         this.refs.toastLogin.show(
+                        //             'Hubo un error al registrar la informacion del usuario',
+                        //             2500
+                        //         );
+						// 	});
 						estaLogueado().then(resp =>
 							console.log('Estado de Estado de login: ', resp)
 						);
 					}
 				})
 				.catch(err => {
-					this.refs.toastLogin.show('Error de conexion al backend', 2500);
+					// this.refs.toastLogin.show('Error de conexion al backend', 2500);
+					this.refs.toastLogin.show(err || '', 2500);
+					console.log(err);
 				});
 		}
 	};
@@ -147,7 +165,7 @@ const mapStateToProps = state => ({
 	token: state.token,
 });
 const mapDispatchToProps = dispatch => ({
-	login: () => dispatch(login()),
+	login: data => dispatch(login(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

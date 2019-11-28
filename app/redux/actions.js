@@ -36,20 +36,25 @@ export const getUserToken = () => dispatch =>
             dispatch(error(err.message || 'ERROR'));
         });
 
-export const login = userData => dispatch =>
+export const login = userData => dispatch => {
+    console.warn(`ACTION LOGIN: ${JSON.stringify(userData)}`);
     AsyncStorage.setItem(USER_LOGGED_IN, JSON.stringify(userData))
         .then((data) => {
+            console.warn(`ACTION LOGIN THEN DATA`);
             dispatch(loading(false));
-            dispatch(saveToken(data));
+            dispatch(saveToken('Token saved'));
         })
         .catch((err) => {
             dispatch(loading(false));
             dispatch(error(err.message || 'ERROR'));
         });
+};
 
-export const logout = () => dispatch =>
+export const logout = () => dispatch => {
+    console.warn(`ACTION LOGOUT`);
     AsyncStorage.removeItem(USER_LOGGED_IN)
         .then((data) => {
+            console.warn(`ACTION LOGOUT THEN DATA: ${data}`);
             dispatch(loading(false));
             dispatch(removeToken(data));
         })
@@ -57,3 +62,4 @@ export const logout = () => dispatch =>
             dispatch(loading(false));
             dispatch(error(err.message || 'ERROR'));
         });
+};

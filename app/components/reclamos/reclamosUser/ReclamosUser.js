@@ -91,9 +91,9 @@ export default class ReclamosUser extends Component {
 			});
 	};
 
-	getImagenReclamo = imagePaths => {
-		if (imagePaths && imagePaths.length > 0) {
-			return imagePaths[0];
+	getImagenReclamo = imagesPaths => {
+		if (imagesPaths && imagesPaths.length > 0) {
+			return imagesPaths[0];
 		} else {
 			return 'https://www.todointeriores.com/wp-content/uploads/2019/04/Une-atmosphe%CC%80re-de%CC%81co-2019-Rivassoux-Murs-1-1.jpg';
 		}
@@ -109,7 +109,7 @@ export default class ReclamosUser extends Component {
 			pisoUnidad,
 			ubicacion,
 			descripcion,
-			imagePaths
+			imagesPaths
 		} = reclamo.item.reclamo;
 
 		return (
@@ -119,7 +119,7 @@ export default class ReclamosUser extends Component {
 						<Image
 							resizeMode='cover'
 							source={{
-								uri: this.getImagenReclamo(imagePaths)
+								uri: this.getImagenReclamo(imagesPaths)
 							}}
 							style={styles.imagenReclamo}
 						/>

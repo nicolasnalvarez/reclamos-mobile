@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
 import * as firebase from 'firebase';
@@ -6,9 +7,11 @@ import UpdateUserInfo from './UpdateUserInfo';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import { getUser, logout } from '../../../auth/Auth';
+import { getUser } from '../../../auth/Auth';
+import { connect } from "react-redux";
+import { logout } from '../../../redux/actions';
 
-export default class UserInfo extends Component {
+class UserInfo extends Component {
 	constructor(props) {
 		super(props);
 
@@ -120,7 +123,7 @@ export default class UserInfo extends Component {
 	};
 
 	signOut = () => {
-		logout().then(() => {
+		this.props.logout().then(() => {
 			this.props.validateLoginStatus();
 		});
 	};
@@ -171,6 +174,16 @@ export default class UserInfo extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	token: state.token,
+});
+
+const mapDispatchToProps = dispatch => ({
+	logout: () => dispatch(logout()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
 
 const styles = StyleSheet.create({
 	bodyView: {
