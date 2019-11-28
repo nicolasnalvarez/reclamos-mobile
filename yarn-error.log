@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/bin/node /usr/share/yarn/bin/yarn.js install
+  /usr/bin/node /usr/share/yarn/bin/yarn.js add react-native-multi-selectbox
 
 PATH: 
   /home/nalvarez/.sdkman/candidates/micronaut/current/bin:/home/nalvarez/google-cloud-sdk/bin:/opt/OpenPrinting-Gutenprint/sbin:/opt/OpenPrinting-Gutenprint/bin:/home/nalvarez/bin:/home/nalvarez/.local/bin:/opt/OpenPrinting-Gutenprint/sbin:/opt/OpenPrinting-Gutenprint/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/opt/mssql-tools/bin:/opt/mssql-tools/bin
@@ -14,7 +14,7 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, mkdir '/home/nalvarez/uade/Aplicaciones distribuidas/reclamos-mobile/node_modules/@babel/core/node_modules'
+  Error: EACCES: permission denied, unlink '/home/nalvarez/uade/Aplicaciones distribuidas/reclamos-mobile/node_modules/.yarn-integrity'
 
 npm manifest: 
   {
