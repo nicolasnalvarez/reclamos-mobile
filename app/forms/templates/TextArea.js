@@ -7,6 +7,7 @@ export default inputTemplate = locals => {
 		<View style={styles.viewContainer}>
 			<Input
 				placeholder={locals.config.placeholder}
+				label={locals.config.label}
 				multiline={true}
 				rightIcon={
 					<Icon
@@ -25,15 +26,15 @@ export default inputTemplate = locals => {
 
 const styles = StyleSheet.create({
 	viewContainer: {
-		margin: 12,
 		height: 100,
-		width: '100%'
+		width: '100%',
+		marginVertical: 20
 	},
 	inputContainer: {
 		position: 'absolute',
 		height: 100,
 		width: '100%',
 		padding: 0,
-		margin: 0
+		margin: 12
 	}
 });

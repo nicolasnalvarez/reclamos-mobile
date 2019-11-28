@@ -106,24 +106,5 @@ const styles = StyleSheet.create({
 		justifyContent: 'center',
 		margin: 40
 	},
-	unidadPicker: {},
-	iconoSeleccionarFotoView: {
-		flex: 1,
-		alignItems: 'flex-start',
-		marginLeft: 12
-	},
-	iconoSeleccionarFoto: {
-		backgroundColor: '#e3e3e3',
-		padding: 17,
-		paddingBottom: 14,
-		margin: 0
-	},
-	agregarReclamoBtnView: {
-		flex: 1,
-		justifyContent: 'flex-end'
-	},
-	agregarReclamoBtn: {
-		backgroundColor: '#00a680',
-		margin: 20
-	}
+	unidadPicker: {}
 });

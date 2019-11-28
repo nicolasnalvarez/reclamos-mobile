@@ -1,63 +1,62 @@
-// import t from 'tcomb-form-native';
-// import inputTemplate from './templates/Input';
-// import textAreaTemplate from './templates/TextArea';
-// import { getUser } from '../auth/Auth';
+import t from 'tcomb-form-native';
+import inputTemplate from './templates/Input';
+import textAreaTemplate from './templates/TextArea';
 
-// var Gender = t.enums({
-// 	M: 'Male',
-// 	F: 'Female'
-// });
+export const AgregarReclamoStruct = t.struct({
+	documento: t.String,
+	ubicacion: t.String,
+	idEdificio: t.Number,
+	idUnidad: t.Number,
+	descripcion: t.String
+});
 
-// export const AgregarReclamoStruct = t.struct({
-// 	documento: t.String,
-// 	ubicacion: t.String,
-// 	descripcion: t.String,
-// 	edificio: Gender
-// });
-
-// getEdificios = () => {
-// 	getUser().then(res => {
-// 		console.log(res);
-
-// 	}).catch(err => {
-// 		console.log(err);
-
-// 	})
-// }
-
-// export const AgregarReclamoOptions = {
-// 	fields: {
-// 		documento: {
-// 			template: inputTemplate,
-// 			config: {
-// 				placeholder: 'Nombre del Restaurante',
-// 				iconType: 'material-community',
-// 				iconName: 'silverware'
-// 			}
-// 		},
-// 		ubicacion: {
-// 			template: inputTemplate,
-// 			config: {
-// 				placeholder: 'Ciudad del Restaurante',
-// 				iconType: 'material-community',
-// 				iconName: 'city'
-// 			}
-// 		},
-// 		descripcion: {
-// 			template: textAreaTemplate,
-// 			config: {
-// 				placeholder: 'Descripcion del Restaurante',
-// 				iconType: 'material-community',
-// 				iconName: 'silverware'
-// 			}
-// 		},
-// 		edificio: {
-// 			config: {
-// 				placeholder: 'Selecciona un edificio',
-// 				iconType: 'material-community',
-// 				iconName: 'silverware',
-// 				options: {getEdificios()}
-// 			}
-// 		}
-// 	}
-// };
+export const AgregarReclamoOptions = {
+	fields: {
+		documento: {
+			template: inputTemplate,
+			config: {
+				placeholder: 'Ej: 35444333',
+				label: 'Documento',
+				iconType: 'material-community',
+				iconName: 'account-card-details'
+			}
+		},
+		ubicacion: {
+			template: inputTemplate,
+			config: {
+				placeholder: 'Ej: Laundry',
+				label: 'Zona del reclamo',
+				iconType: 'material-community',
+				iconName: 'wall'
+			}
+		},
+		idEdificio: {
+			template: inputTemplate,
+			config: {
+				placeholder: 'Ej: 5',
+				label: 'ID del edificio',
+				iconType: 'material-community',
+				iconName: 'city'
+			}
+		},
+		idUnidad: {
+			template: inputTemplate,
+			config: {
+				placeholder: 'Ej: 6',
+				label: 'ID de la unidad',
+				iconType: 'material-community',
+				iconName: 'home-city'
+			}
+		},
+		descripcion: {
+			template: textAreaTemplate,
+			config: {
+				placeholder:
+					'Ej: El lavarropas que se encuentra en el Laundry esta roto',
+				label: 'Descripcion',
+				iconType: 'material-community',
+				iconName: 'card-text'
+			}
+		}
+	}
+};

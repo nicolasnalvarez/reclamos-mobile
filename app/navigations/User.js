@@ -16,6 +16,7 @@ import LoginScreen from '../screens/myAccount/Login';
 import ReclamosScreen from '../screens/reclamos/Reclamos';
 import AgregarReclamoScreen from '../screens/reclamos/AgregarReclamo';
 import ReclamoScreen from '../screens/reclamos/Reclamo';
+import CamaraScreen from '../screens/reclamos/Camara';
 
 const reclamosScreenStack = createStackNavigator({
 	Reclamos: {
@@ -38,15 +39,10 @@ const reclamosScreenStack = createStackNavigator({
 		navigationOptions: ({ navigation }) => ({
 			title: 'Reclamo N° ' + navigation.state.params.reclamo.item.reclamo.id
 		})
-	}
-});
-
-const topFiveScreenStack = createStackNavigator({
-	TopFive: {
-		screen: TopFiveScreen,
-		navigationOptions: ({ navigation }) => ({
-			title: 'Top 5 Restaurantes'
-		})
+	},
+	Camara: {
+		screen: CamaraScreen,
+		navigationOptions: ({ navigation }) => ({})
 	}
 });
 
@@ -89,20 +85,6 @@ const RootStack = createBottomTabNavigator(
 				tabBarIcon: ({ tintColor }) => (
 					<Icon
 						name='file-document-outline'
-						type='material-community'
-						size={22}
-						color={tintColor}
-					/>
-				)
-			})
-		},
-		TopFive: {
-			screen: topFiveScreenStack,
-			navigationOptions: ({ navigation }) => ({
-				tabBarLabel: 'Top 5',
-				tabBarIcon: ({ tintColor }) => (
-					<Icon
-						name='star-outline'
 						type='material-community'
 						size={22}
 						color={tintColor}

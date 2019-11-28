@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native';
 import t from 'tcomb-form-native';
-// import {
-// 	AgregarReclamoStruct,
-// 	AgregarReclamoOptions
-// } from '../../forms/AgregarReclamo';
+import {
+	AgregarReclamoStruct,
+	AgregarReclamoOptions
+} from '../../forms/AgregarReclamo';
 import { Icon, Image, Button, Text, Overlay } from 'react-native-elements';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
@@ -14,7 +14,7 @@ import { firebaseApp } from '../../utils/Firebase';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import config from '../../utils/Config';
-import CrearReclamoForm from '../../components/reclamos/reclamosUser/CrearReclamoForm';
+import Camara from './Camara';
 
 const Form = t.form.Form;
 const db = firebase.firestore(firebaseApp);
@@ -28,7 +28,9 @@ export default class AgregarReclamo extends Component {
 			formData: {
 				documento: '',
 				ubicacion: '',
-				descripcion: ''
+				descripcion: '',
+				idEdificio: null,
+				idUnidad: null
 			},
 			loading: false
 		};
@@ -68,6 +70,8 @@ export default class AgregarReclamo extends Component {
 			}
 		}
 	};
+
+	abrirCamara = async () => {};
 
 	onChangeAgregarFormReclamo = formValue => {
 		this.setState({
@@ -113,11 +117,9 @@ export default class AgregarReclamo extends Component {
 				.then(res => {
 					const restaurantId = res.id;
 
-					uploadImage(URIImagenReclamo, restaurantId, 'restaurantes')
+					uploadImage(URIImagenReclamo, restaurantId, 'reclamos')
 						.then(res => {
-							const restaurantRef = db
-								.collection('restaurantes')
-								.doc(restaurantId);
+							const restaurantRef = db.collection('reclamos').doc(restaurantId);
 
 							restaurantRef
 								.update({ image: res })
@@ -168,14 +170,40 @@ export default class AgregarReclamo extends Component {
 					{this.mostrarImagenReclamo(URIImagenReclamo)}
 				</View>
 				<View>
-					{/* <Form
+					<Form
 						ref='agregarReclamoForm'
 						type={AgregarReclamoStruct}
 						options={AgregarReclamoOptions}
 						value={this.state.formData}
 						onChange={formValue => this.onChangeAgregarFormReclamo(formValue)}
+					/>
+				</View>
+				<View style={styles.iconoSeleccionarFotoView}>
+					<Icon
+						name='image'
+						type='material-community'
+						onPress={() => this.subirImagen()}
+						reverse
+						color='orange'
+						containerStyle={styles.containerIconoSeleccionarFoto}
+						size={30}
+					/>
+					{/* <Icon
+						name='camera'
+						type='material-community'
+						onPress={this.props.navigation.navigate('Camara')}
+						reverse
+						color='orange'
+						containerStyle={styles.containerIconoTomarFoto}
+						size={30}
 					/> */}
-					<CrearReclamoForm />
+				</View>
+				<View style={styles.agregarReclamoBtnView}>
+					<Button
+						title='Crear Reclamo'
+						onPress={() => this.agregarReclamo()}
+						buttonStyle={styles.agregarReclamoBtn}
+					/>
 				</View>
 				<Toast
 					ref='toast'
@@ -191,8 +219,7 @@ export default class AgregarReclamo extends Component {
 						overlayStyle={styles.loadingOverlay}
 						isVisible={loading}
 						width='auto'
-						height='auto'
-					>
+						height='auto'>
 						<View>
 							<Text style={styles.loadingOverlayText}>Creando Reclamo</Text>
 							<ActivityIndicator size='large' color='#00a680' />
@@ -211,7 +238,7 @@ const styles = StyleSheet.create({
 	photoPreview: {
 		alignItems: 'center',
 		height: 150,
-		marginBottom: 20
+		marginBottom: 70
 	},
 	uploadPhotoIconView: {
 		flex: 1,
@@ -239,5 +266,27 @@ const styles = StyleSheet.create({
 		color: '#00a680',
 		marginBottom: 20,
 		fontSize: 20
+	},
+	iconoSeleccionarFotoView: {
+		flex: 1,
+		flexDirection: 'row',
+		alignContent: 'center',
+		justifyContent: 'center'
+	},
+	containerIconoSeleccionarFoto: {
+		// padding: 30,
+		// paddingLeft: 50
+	},
+	containerIconoTomarFoto: {
+		padding: 30,
+		paddingLeft: 60
+	},
+	agregarReclamoBtnView: {
+		flex: 1,
+		justifyContent: 'flex-end'
+	},
+	agregarReclamoBtn: {
+		backgroundColor: '#00a680',
+		margin: 20
 	}
 });
