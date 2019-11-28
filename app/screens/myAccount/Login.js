@@ -5,11 +5,13 @@ import t from 'tcomb-form-native';
 import { LoginStruct, LoginOptions } from '../../forms/Login';
 import Toast from 'react-native-easy-toast';
 import config from '../../utils/Config';
-import { login, estaLogueado } from '../../auth/Auth';
+import { estaLogueado } from '../../auth/Auth';
+import { connect } from 'react-redux';
+import { login } from '../../redux/actions';
 
 const Form = t.form.Form;
 
-export default class Login extends Component {
+class Login extends Component {
 	constructor(props) {
 		super(props);
 
@@ -140,6 +142,15 @@ export default class Login extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => ({
+	token: state.token,
+});
+const mapDispatchToProps = dispatch => ({
+	login: () => dispatch(login()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
 	viewBody: {
