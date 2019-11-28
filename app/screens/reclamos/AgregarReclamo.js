@@ -87,7 +87,6 @@ export default class AgregarReclamo extends Component {
 			idEdificio,
 			idUnidad
 		} = this.state.formData;
-		const { documento } = this.state;
 
 		if (URIImagenReclamo && ubicacion && descripcion) {
 			this.setState({
@@ -103,7 +102,6 @@ export default class AgregarReclamo extends Component {
 				.catch(err => {
 					console.log(err);
 				});
-			console.log('state actual: ', this.state.documento);
 
 			uploadImage(URIImagenReclamo, Date.now(), 'reclamos')
 				.then(URLImagen => {
@@ -194,7 +192,7 @@ export default class AgregarReclamo extends Component {
 						containerStyle={styles.containerIconoSeleccionarFoto}
 						size={30}
 					/>
-					<Icon
+					{/* <Icon
 						name='camera'
 						type='material-community'
 						onPress={() => this.props.navigation.navigate('Camara')}
@@ -202,7 +200,7 @@ export default class AgregarReclamo extends Component {
 						color='orange'
 						containerStyle={styles.containerIconoTomarFoto}
 						size={30}
-					/>
+					/> */}
 				</View>
 				<View style={styles.agregarReclamoBtnView}>
 					<Button
@@ -214,7 +212,7 @@ export default class AgregarReclamo extends Component {
 				<Toast
 					ref='toast'
 					position='bottom'
-					positionValue={320}
+					positionValue={3}
 					fadeInDuration={1000}
 					fadeOutDuration={1000}
 					opacity={0.8}
@@ -281,8 +279,7 @@ const styles = StyleSheet.create({
 		justifyContent: 'center'
 	},
 	containerIconoSeleccionarFoto: {
-		// padding: 30,
-		// paddingLeft: 50
+		padding: 30
 	},
 	containerIconoTomarFoto: {
 		padding: 30,
