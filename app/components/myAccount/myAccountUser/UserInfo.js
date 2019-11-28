@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import { View, Text, StyleSheet } from 'react-native';
 import { Avatar, Button } from 'react-native-elements';
 import * as firebase from 'firebase';
@@ -37,12 +36,6 @@ class UserInfo extends Component {
 			.catch(err => console.log(err));
 	};
 
-	checkUserAvatar = photoURL => {
-		return photoURL
-			? photoURL
-			: 'https://api.adorable.io/avatars/285/abott@adorable.png';
-	};
-
 	updateUserDisplayName = async newDisplayName => {
 		console.log('TODO: Cambio de info del usuario');
 	};
@@ -58,70 +51,6 @@ class UserInfo extends Component {
 		}
 	};
 
-	updateUserPhotoURL = async newPhotoURL => {
-		const update = {
-			photoURL: newPhotoURL
-		};
-		await firebase.auth().currentUser.updateProfile(update);
-		this.getUserInfo();
-	};
-
-	changeUserAvatar = async () => {
-		const resultPermision = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
-		if (resultPermision.status === 'denied') {
-			this.refs.toast.show(
-				'Es necesario aceptar los permisos para acceder a la galeria',
-				1500
-			);
-		} else {
-			const result = await ImagePicker.launchImageLibraryAsync({
-				allowEditing: true,
-				aspect: [4, 3]
-			});
-
-			if (result.cancelled) {
-				this.refs.toast.show('Se cerro la galeria de imagenes');
-			} else {
-				const { uid } = this.state.userInfo;
-				this.uploadImage(result.uri, uid)
-					.then(res => {
-						this.refs.toast.show('Avatar actualizado correctamente');
-
-						firebase
-							.storage()
-							.ref('avatar/' + uid)
-							.getDownloadURL()
-							.then(url => {
-								this.updateUserPhotoURL(url);
-							})
-							.catch(err => {
-								this.refs.toast.show(
-									'No se pudo recuperar el avatar del servidor'
-								);
-							});
-					})
-					.catch(err => {
-						this.refs.toast.show('No se pudo actualizar el avatar');
-					});
-			}
-		}
-	};
-
-	uploadImage = async (uri, imageName) => {
-		fetch(uri)
-			.then(async res => {
-				let ref = firebase
-					.storage()
-					.ref()
-					.child('avatar/' + imageName);
-				return await ref.put(res._bodyBlob);
-			})
-			.catch(err => {
-				this.refs.toast.show(err, 1500);
-			});
-	};
-
 	signOut = () => {
 		this.props.logout().then(() => {
 			this.props.validateLoginStatus();
@@ -132,8 +61,22 @@ class UserInfo extends Component {
 		this.props.navigation.navigate(nameScreen);
 	};
 
+	formatearTipoDeUsuario = tipoUsuario => {
+		if (tipoUsuario === 1) {
+			return <Text style={styles.infoUsuarioFilaImpar}>Dueño</Text>;
+		} else {
+			return <Text style={styles.infoUsuarioFilaImpar}>Inquilino</Text>;
+		}
+	};
+
+	formatearEmail = email => {
+		if (email) {
+			return <Text style={styles.infoUsuarioFilaPar}>{email}</Text>;
+		}
+	};
+
 	render() {
-		const { displayName, email, photoURL } = this.state.userInfo;
+		const { nombre, tipo_usuario, dni, email } = this.state.userInfo;
 
 		return (
 			<View>
@@ -141,14 +84,18 @@ class UserInfo extends Component {
 					<Avatar
 						rounded
 						size='large'
-						source={{ uri: this.checkUserAvatar(photoURL) }}
+						source={{
+							uri: 'https://api.adorable.io/avatars/285/abott@adorable.png'
+						}}
 						containerStyle={styles.userInfoAvatar}
 						showEditButton
 						onEditPress={() => this.changeUserAvatar()}
 					/>
 					<View>
-						<Text style={styles.displayName}>{displayName}</Text>
-						<Text>{email}</Text>
+						<Text style={styles.infoUsuarioFilaImpar}>{nombre}</Text>
+						<Text style={styles.infoUsuarioFilaPar}>{dni}</Text>
+						{this.formatearTipoDeUsuario(tipo_usuario)}
+						{this.formatearEmail(email)}
 					</View>
 				</View>
 

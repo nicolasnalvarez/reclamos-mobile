@@ -3,7 +3,6 @@ import inputTemplate from './templates/Input';
 import textAreaTemplate from './templates/TextArea';
 
 export const AgregarReclamoStruct = t.struct({
-	documento: t.String,
 	ubicacion: t.String,
 	idEdificio: t.Number,
 	idUnidad: t.Number,
@@ -12,15 +11,6 @@ export const AgregarReclamoStruct = t.struct({
 
 export const AgregarReclamoOptions = {
 	fields: {
-		documento: {
-			template: inputTemplate,
-			config: {
-				placeholder: 'Ej: 35444333',
-				label: 'Documento',
-				iconType: 'material-community',
-				iconName: 'account-card-details'
-			}
-		},
 		ubicacion: {
 			template: inputTemplate,
 			config: {
