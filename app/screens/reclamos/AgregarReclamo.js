@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ScrollView, ActivityIndicator } from 'react-native';
 import t from 'tcomb-form-native';
-import {
-	AgregarReclamoStruct,
-	AgregarReclamoOptions
-} from '../../forms/AgregarReclamo';
+// import {
+// 	AgregarReclamoStruct,
+// 	AgregarReclamoOptions
+// } from '../../forms/AgregarReclamo';
 import { Icon, Image, Button, Text, Overlay } from 'react-native-elements';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
@@ -13,6 +13,8 @@ import { uploadImage } from '../../utils/UploadImage';
 import { firebaseApp } from '../../utils/Firebase';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import config from '../../utils/Config';
+import CrearReclamoForm from '../../components/reclamos/reclamosUser/CrearReclamoForm';
 
 const Form = t.form.Form;
 const db = firebase.firestore(firebaseApp);
@@ -32,66 +34,79 @@ export default class AgregarReclamo extends Component {
 		};
 	}
 
-	imageIsRestaurant = image => {
-		return image ? (
-			<Image source={{ uri: image }} style={{ width: 500, height: 200 }} />
+	mostrarImagenReclamo = imagen => {
+		return imagen ? (
+			<Image source={{ uri: imagen }} style={{ width: 500, height: 200 }} />
 		) : (
 			<Image
-				source={require('../../../assets/img/restaurante.jpg')}
+				source={require('../../../assets/img/sin-reclamo.jpg')}
 				style={{ width: 200, height: 200 }}
 			/>
 		);
 	};
 
-	uploadImage = async () => {
-		const permissionResult = await Permissions.askAsync(
+	subirImagen = async () => {
+		const permisoAccesoImagenesDispositivo = await Permissions.askAsync(
 			Permissions.CAMERA_ROLL
 		);
 
-		if (permissionResult.status === 'denied') {
+		if (permisoAccesoImagenesDispositivo.status === 'denied') {
 			this.refs.toast.show(
 				'Es necesario aceptar los permisos de la galeria',
 				1500
 			);
 		} else {
-			const result = await ImagePicker.launchImageLibraryAsync({
+			const resultado = await ImagePicker.launchImageLibraryAsync({
 				allowsEditing: true
 			});
-			if (result.cancelled) {
+			if (resultado.cancelled) {
 				this.refs.toast.show('Has cerrado la galeria', 1500);
 			} else {
 				this.setState({
-					URIImagenReclamo: result.uri
+					URIImagenReclamo: resultado.uri
 				});
 			}
 		}
 	};
 
-	onChangeAddFormRestaurant = formValue => {
+	onChangeAgregarFormReclamo = formValue => {
 		this.setState({
 			formData: formValue
 		});
 	};
 
-	addRestaurant = () => {
+	agregarReclamo = () => {
 		const { URIImagenReclamo } = this.state;
-		const {
-			documento: name,
-			ubicacion: city,
-			address,
-			descripcion: description
-		} = this.state.formData;
+		const { documento, ubicacion, descripcion } = this.state.formData;
 
-		if (URIImagenReclamo && name && city && address && description) {
+		if (URIImagenReclamo && ubicacion && descripcion) {
 			this.setState({
 				loading: true
 			});
-			db.collection('restaurantes')
+			const nuevoReclamoRequest = {
+				documento,
+				ubicacion,
+				descripcion
+			};
+			fetch(config.GENERAR_RECLAMO_PATH, {
+				method: 'POST',
+				body: JSON.stringify(nuevoReclamoRequest),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then(res => {
+					console.log(res);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+
+			db.collection('reclamos')
 				.add({
-					name,
-					city,
-					address,
-					description,
+					documento,
+					ubicacion,
+					descripcion,
 					image: '',
 					createdAt: new Date()
 				})
@@ -145,40 +160,22 @@ export default class AgregarReclamo extends Component {
 	};
 
 	render() {
-		const {
-			restaurantImageURIImagenReclamo: restaurantImageUri,
-			loading
-		} = this.state;
+		const { URIImagenReclamo, loading } = this.state;
 
 		return (
-			<View style={styles.viewBody}>
+			<ScrollView style={styles.viewBody}>
 				<View style={styles.photoPreview}>
-					{this.imageIsRestaurant(restaurantImageUri)}
+					{this.mostrarImagenReclamo(URIImagenReclamo)}
 				</View>
 				<View>
-					<Form
-						ref='addRestaurantForm'
+					{/* <Form
+						ref='agregarReclamoForm'
 						type={AgregarReclamoStruct}
 						options={AgregarReclamoOptions}
 						value={this.state.formData}
-						onChange={formValue => this.onChangeAddFormRestaurant(formValue)}
-					/>
-				</View>
-				<View style={styles.uploadPhotoIconView}>
-					<Icon
-						name='camera'
-						type='material-community'
-						color='#7a7a7a'
-						iconStyle={styles.uploadPhotoIcon}
-						onPress={() => this.uploadImage()}
-					/>
-				</View>
-				<View style={styles.addRestaurantBtnView}>
-					<Button
-						title='Crear Restaurante'
-						onPress={() => this.addRestaurant()}
-						buttonStyle={styles.addRestaurantBtn}
-					/>
+						onChange={formValue => this.onChangeAgregarFormReclamo(formValue)}
+					/> */}
+					<CrearReclamoForm />
 				</View>
 				<Toast
 					ref='toast'
@@ -197,12 +194,12 @@ export default class AgregarReclamo extends Component {
 						height='auto'
 					>
 						<View>
-							<Text style={styles.loadingOverlayText}>Creando Restaurante</Text>
+							<Text style={styles.loadingOverlayText}>Creando Reclamo</Text>
 							<ActivityIndicator size='large' color='#00a680' />
 						</View>
 					</Overlay>
 				</View>
-			</View>
+			</ScrollView>
 		);
 	}
 }

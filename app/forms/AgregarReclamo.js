@@ -1,47 +1,63 @@
-import t from 'tcomb-form-native';
-import inputTemplate from './templates/Input';
-import textAreaTemplate from './templates/TextArea';
+// import t from 'tcomb-form-native';
+// import inputTemplate from './templates/Input';
+// import textAreaTemplate from './templates/TextArea';
+// import { getUser } from '../auth/Auth';
 
-export const AgregarReclamoStruct = t.struct({
-	name: t.String,
-	city: t.String,
-	address: t.String,
-	description: t.String
-});
+// var Gender = t.enums({
+// 	M: 'Male',
+// 	F: 'Female'
+// });
 
-export const AgregarReclamoOptions = {
-	fields: {
-		name: {
-			template: inputTemplate,
-			config: {
-				placeholder: 'Nombre del Restaurante',
-				iconType: 'material-community',
-				iconName: 'silverware'
-			}
-		},
-		city: {
-			template: inputTemplate,
-			config: {
-				placeholder: 'Ciudad del Restaurante',
-				iconType: 'material-community',
-				iconName: 'city'
-			}
-		},
-		address: {
-			template: inputTemplate,
-			config: {
-				placeholder: 'Direccion del Restaurante',
-				iconType: 'material-community',
-				iconName: 'map-marker'
-			}
-		},
-		description: {
-			template: textAreaTemplate,
-			config: {
-				placeholder: 'Descripcion del Restaurante',
-				iconType: 'material-community',
-				iconName: 'silverware'
-			}
-		}
-	}
-};
+// export const AgregarReclamoStruct = t.struct({
+// 	documento: t.String,
+// 	ubicacion: t.String,
+// 	descripcion: t.String,
+// 	edificio: Gender
+// });
+
+// getEdificios = () => {
+// 	getUser().then(res => {
+// 		console.log(res);
+
+// 	}).catch(err => {
+// 		console.log(err);
+
+// 	})
+// }
+
+// export const AgregarReclamoOptions = {
+// 	fields: {
+// 		documento: {
+// 			template: inputTemplate,
+// 			config: {
+// 				placeholder: 'Nombre del Restaurante',
+// 				iconType: 'material-community',
+// 				iconName: 'silverware'
+// 			}
+// 		},
+// 		ubicacion: {
+// 			template: inputTemplate,
+// 			config: {
+// 				placeholder: 'Ciudad del Restaurante',
+// 				iconType: 'material-community',
+// 				iconName: 'city'
+// 			}
+// 		},
+// 		descripcion: {
+// 			template: textAreaTemplate,
+// 			config: {
+// 				placeholder: 'Descripcion del Restaurante',
+// 				iconType: 'material-community',
+// 				iconName: 'silverware'
+// 			}
+// 		},
+// 		edificio: {
+// 			config: {
+// 				placeholder: 'Selecciona un edificio',
+// 				iconType: 'material-community',
+// 				iconName: 'silverware',
+// 				options: {getEdificios()}
+// 			}
+// 		}
+// 	}
+// };
