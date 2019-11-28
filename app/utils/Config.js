@@ -4,7 +4,7 @@ const REGISTER_PATH = SERVER_URL + '/auth/register';
 const LOGIN_PATH = SERVER_URL + '/auth/login';
 const MIS_RECLAMOS_PATH = SERVER_URL + '/reclamos/all';
 const GET_RECLAMO_PATH = SERVER_URL + '/reclamos';
-const GENERAR_RECLAMO_PATH = SERVER_URL + '/reclamos/all';
+const GENERAR_RECLAMO_PATH = SERVER_URL + '/reclamos';
 
 export default {
 	REGISTER_PATH,

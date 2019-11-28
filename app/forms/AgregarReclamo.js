@@ -3,44 +3,59 @@ import inputTemplate from './templates/Input';
 import textAreaTemplate from './templates/TextArea';
 
 export const AgregarReclamoStruct = t.struct({
-	name: t.String,
-	city: t.String,
-	address: t.String,
-	description: t.String
+	documento: t.String,
+	ubicacion: t.String,
+	idEdificio: t.Number,
+	idUnidad: t.Number,
+	descripcion: t.String
 });
 
 export const AgregarReclamoOptions = {
 	fields: {
-		name: {
+		documento: {
 			template: inputTemplate,
 			config: {
-				placeholder: 'Nombre del Restaurante',
+				placeholder: 'Ej: 35444333',
+				label: 'Documento',
 				iconType: 'material-community',
-				iconName: 'silverware'
+				iconName: 'account-card-details'
 			}
 		},
-		city: {
+		ubicacion: {
 			template: inputTemplate,
 			config: {
-				placeholder: 'Ciudad del Restaurante',
+				placeholder: 'Ej: Laundry',
+				label: 'Zona del reclamo',
+				iconType: 'material-community',
+				iconName: 'wall'
+			}
+		},
+		idEdificio: {
+			template: inputTemplate,
+			config: {
+				placeholder: 'Ej: 5',
+				label: 'ID del edificio',
 				iconType: 'material-community',
 				iconName: 'city'
 			}
 		},
-		address: {
+		idUnidad: {
 			template: inputTemplate,
 			config: {
-				placeholder: 'Direccion del Restaurante',
+				placeholder: 'Ej: 6',
+				label: 'ID de la unidad',
 				iconType: 'material-community',
-				iconName: 'map-marker'
+				iconName: 'home-city'
 			}
 		},
-		description: {
+		descripcion: {
 			template: textAreaTemplate,
 			config: {
-				placeholder: 'Descripcion del Restaurante',
+				placeholder:
+					'Ej: El lavarropas que se encuentra en el Laundry esta roto',
+				label: 'Descripcion',
 				iconType: 'material-community',
-				iconName: 'silverware'
+				iconName: 'card-text'
 			}
 		}
 	}

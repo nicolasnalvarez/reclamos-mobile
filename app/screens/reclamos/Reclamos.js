@@ -6,7 +6,6 @@ import { estaLogueado } from '../../auth/Auth';
 export default class Reclamos extends Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
 		this.state = {
 			login: false
 		};

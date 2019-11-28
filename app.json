@@ -23,7 +23,7 @@
 		},
 		"android": {
 			"package": "com.uade.reclamosmobile",
-			"permissions": ["CAMERA_ROLL"]
+			"permissions": ["CAMERA_ROLL", "CAMERA", "AUDIO_RECORDING"]
 		}
 	}
 }
