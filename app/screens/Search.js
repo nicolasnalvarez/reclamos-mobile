@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import { SearchBar, ListItem, Icon } from 'react-native-elements';
+import config from '../utils/Config';
 
 export default class Search extends Component {
 	constructor() {
@@ -14,7 +15,19 @@ export default class Search extends Component {
 
 	buscarReclamo = async idReclamo => {
 		this.setState({ busqueda: idReclamo });
-		let resultRestaurants = null;
+		let url = config.GET_RECLAMO_PATH + '/' + idReclamo;
+
+		fetch(url)
+			.then(res => res.json())
+			.then(reclamoResp => {
+				console.log(reclamoResp);
+				this.setState({
+					reclamo: reclamoResp
+				});
+			})
+			.catch(err => {
+				console.log(err);
+			});
 	};
 
 	getImagenReclamo = imagePaths => {
@@ -30,8 +43,8 @@ export default class Search extends Component {
 			return (
 				<View>
 					<ListItem
-						key={reclamo.idReclamo}
-						title={reclamo.idReclamo}
+						key={reclamo.id}
+						title={reclamo.id}
 						leftAvatar={{
 							source: { uri: this.getImagenReclamo(reclamo.imagePaths) }
 						}}

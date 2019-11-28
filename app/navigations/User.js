@@ -37,7 +37,7 @@ const reclamosScreenStack = createStackNavigator({
 	Reclamo: {
 		screen: ReclamoScreen,
 		navigationOptions: ({ navigation }) => ({
-			title: 'Reclamo N° ' + navigation.state.params.reclamo.item.reclamo.id
+			title: 'Ficha del Reclamo'
 		})
 	},
 	Camara: {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import { Image, Icon, ListItem } from 'react-native-elements';
 
-export default class Restaurant extends Component {
+export default class Reclamo extends Component {
 	constructor(props) {
 		super(props);
 	}
@@ -53,7 +53,7 @@ export default class Restaurant extends Component {
 				</View>
 				<View style={styles.InfoReclamoView}>
 					<Text style={styles.edificioReclamo}>Edificio: {nombreEdificio}</Text>
-					<View style={styles.restaurantExtraInfoView}>
+					<View style={styles.reclamoExtraInfoView}>
 						{listExtraInfo.map((item, index) => (
 							<ListItem
 								key={index}
@@ -101,13 +101,8 @@ const styles = StyleSheet.create({
 		paddingTop: 2,
 		color: 'grey'
 	},
-	restaurantExtraInfoView: {
+	reclamoExtraInfoView: {
 		margin: 15,
 		marginTop: 25
-	},
-	restaurantExtraInfoTitle: {
-		fontSize: 20,
-		fontWeight: 'bold',
-		marginBottom: 10
 	}
 });

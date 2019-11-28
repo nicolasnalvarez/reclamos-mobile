@@ -188,15 +188,15 @@ export default class AgregarReclamo extends Component {
 						containerStyle={styles.containerIconoSeleccionarFoto}
 						size={30}
 					/>
-					{/* <Icon
+					<Icon
 						name='camera'
 						type='material-community'
-						onPress={this.props.navigation.navigate('Camara')}
+						onPress={() => this.props.navigation.navigate('Camara')}
 						reverse
 						color='orange'
 						containerStyle={styles.containerIconoTomarFoto}
 						size={30}
-					/> */}
+					/>
 				</View>
 				<View style={styles.agregarReclamoBtnView}>
 					<Button
@@ -219,7 +219,8 @@ export default class AgregarReclamo extends Component {
 						overlayStyle={styles.loadingOverlay}
 						isVisible={loading}
 						width='auto'
-						height='auto'>
+						height='auto'
+					>
 						<View>
 							<Text style={styles.loadingOverlayText}>Creando Reclamo</Text>
 							<ActivityIndicator size='large' color='#00a680' />
