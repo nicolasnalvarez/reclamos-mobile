@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, Picker } from 'react-native';
 import { Button, Image, Input, Icon } from 'react-native-elements';
+import RNPickerSelect from 'react-native-picker-select';
 
 export default class CrearReclamoForm extends Component {
 	constructor(props) {
@@ -39,7 +40,20 @@ export default class CrearReclamoForm extends Component {
 						label='Descripcion'
 						containerStyle={styles.descripcionInput}
 					/>
-					<Picker
+
+					<RNPickerSelect
+						onValueChange={value => this.setState({ opcion: value })}
+						placeholder={{ label: 'Seleccione un edificio' }}
+						items={[
+							{ label: 'Football', value: 'football' },
+							{ label: 'Baseball', value: 'baseball' },
+							{ label: 'Hockey', value: 'hockey' }
+						]}
+						value={this.state.opcion}
+						style={styles.edificioPicker}
+					/>
+
+					{/* <Picker
 						//selectedValue={''}
 						style={{ height: 50, width: 100 }}
 						onValueChange={(itemValue, itemIndex) =>
@@ -49,7 +63,7 @@ export default class CrearReclamoForm extends Component {
 					>
 						<Picker.Item label='Java' value='java' />
 						<Picker.Item label='JavaScript' value='js' />
-					</Picker>
+					</Picker> */}
 				</View>
 				<View style={styles.iconoSeleccionarFotoView}>
 					<Icon
@@ -88,8 +102,9 @@ const styles = StyleSheet.create({
 	descripcionInput: {
 		marginTop: 10
 	},
-	ubicacionPicker: {
-		justifyContent: 'center'
+	edificioPicker: {
+		justifyContent: 'center',
+		margin: 40
 	},
 	unidadPicker: {},
 	iconoSeleccionarFotoView: {
