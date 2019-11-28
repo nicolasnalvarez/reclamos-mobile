@@ -6,8 +6,9 @@ import { LoginStruct, LoginOptions } from '../../forms/Login';
 import Toast from 'react-native-easy-toast';
 import config from '../../utils/Config';
 import { estaLogueado } from '../../auth/Auth';
-import { connect } from 'react-redux';
-import { login } from '../../redux/actions';
+// import { connect } from 'react-redux';
+// import { login } from '../../redux/actions';
+import { login } from '../../auth/Auth'
 
 const Form = t.form.Form;
 
@@ -28,6 +29,7 @@ class Login extends Component {
 
 	login = () => {
 		const { navigation } = this.props;
+		console.log('Entró al login');
 
 		const validate = this.refs.loginForm.getValue();
 		if (!validate) {
@@ -58,8 +60,9 @@ class Login extends Component {
 				})
 				.then(response => {
 					if (response) {
-
-                        this.props.login(response)
+                        this.refs.toastLogin.show('antes del login interno');
+                        // this.props.login(response)
+                        login(response)
                             .then(() => {
                                 this.refs.toastLogin.show('Login correcto', 2500, () => {
                                     navigation.state.params.validateLoginStatus();
@@ -93,8 +96,8 @@ class Login extends Component {
 					}
 				})
 				.catch(err => {
-					// this.refs.toastLogin.show('Error de conexion al backend', 2500);
-					this.refs.toastLogin.show(err || '', 2500);
+					this.refs.toastLogin.show('Error de conexion al backend', 2500);
+                    // this.refs.toastLogin.show(err.message || '', 2500);
 					console.log(err);
 				});
 		}
@@ -161,14 +164,15 @@ class Login extends Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	token: state.token,
-});
-const mapDispatchToProps = dispatch => ({
-	login: data => dispatch(login(data)),
-});
+// const mapStateToProps = state => ({
+// 	token: state.token,
+// });
+// const mapDispatchToProps = dispatch => ({
+// 	login: data => dispatch(login(data)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+// export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
 
 const styles = StyleSheet.create({
 	viewBody: {
