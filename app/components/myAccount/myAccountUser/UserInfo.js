@@ -6,9 +6,9 @@ import UpdateUserInfo from './UpdateUserInfo';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-import { getUser } from '../../../auth/Auth';
-import { connect } from 'react-redux';
-import { logout } from '../../../redux/actions';
+import { getUser, logout } from '../../../auth/Auth';
+// import { connect } from 'react-redux';
+// import { logout } from '../../../redux/actions';
 
 class UserInfo extends Component {
 	constructor(props) {
@@ -52,7 +52,8 @@ class UserInfo extends Component {
 	};
 
 	signOut = () => {
-		this.props.logout().then(() => {
+		// this.props.logout().then(() => {
+		logout().then(() => {
 			this.props.validateLoginStatus();
 		});
 	};
@@ -126,15 +127,16 @@ class UserInfo extends Component {
 	}
 }
 
-const mapStateToProps = state => ({
-	token: state.token
-});
+// const mapStateToProps = state => ({
+// 	token: state.token
+// });
+//
+// const mapDispatchToProps = dispatch => ({
+// 	logout: () => dispatch(logout())
+// });
 
-const mapDispatchToProps = dispatch => ({
-	logout: () => dispatch(logout())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
+// export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
+export default UserInfo;
 
 const styles = StyleSheet.create({
 	bodyView: {
