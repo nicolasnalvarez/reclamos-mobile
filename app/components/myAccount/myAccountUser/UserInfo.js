@@ -7,7 +7,7 @@ import Toast, { DURATION } from 'react-native-easy-toast';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { getUser } from '../../../auth/Auth';
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { logout } from '../../../redux/actions';
 
 class UserInfo extends Component {
@@ -63,15 +63,21 @@ class UserInfo extends Component {
 
 	formatearTipoDeUsuario = tipoUsuario => {
 		if (tipoUsuario === 1) {
-			return <Text style={styles.infoUsuarioFilaImpar}>Dueño</Text>;
+			return (
+				<Text style={styles.infoUsuarioFilaImpar}>Tipo de usuario: Dueño</Text>
+			);
 		} else {
-			return <Text style={styles.infoUsuarioFilaImpar}>Inquilino</Text>;
+			return (
+				<Text style={styles.infoUsuarioFilaImpar}>
+					Tipo de usuario: Inquilino
+				</Text>
+			);
 		}
 	};
 
 	formatearEmail = email => {
 		if (email) {
-			return <Text style={styles.infoUsuarioFilaPar}>{email}</Text>;
+			return <Text style={styles.infoUsuarioFilaPar}>Email: {email}</Text>;
 		}
 	};
 
@@ -88,12 +94,10 @@ class UserInfo extends Component {
 							uri: 'https://api.adorable.io/avatars/285/abott@adorable.png'
 						}}
 						containerStyle={styles.userInfoAvatar}
-						showEditButton
-						onEditPress={() => this.changeUserAvatar()}
 					/>
 					<View>
-						<Text style={styles.infoUsuarioFilaImpar}>{nombre}</Text>
-						<Text style={styles.infoUsuarioFilaPar}>{dni}</Text>
+						<Text style={styles.infoUsuarioFilaImpar}>Nombre: {nombre}</Text>
+						<Text style={styles.infoUsuarioFilaPar}>Documento: {dni}</Text>
 						{this.formatearTipoDeUsuario(tipo_usuario)}
 						{this.formatearEmail(email)}
 					</View>
@@ -123,11 +127,11 @@ class UserInfo extends Component {
 }
 
 const mapStateToProps = state => ({
-	token: state.token,
+	token: state.token
 });
 
 const mapDispatchToProps = dispatch => ({
-	logout: () => dispatch(logout()),
+	logout: () => dispatch(logout())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
@@ -144,8 +148,13 @@ const styles = StyleSheet.create({
 	userInfoAvatar: {
 		marginRight: 20
 	},
-	displayName: {
-		fontWeight: 'bold'
+	infoUsuarioFilaImpar: {
+		fontWeight: 'bold',
+		backgroundColor: 'lightgrey'
+	},
+	infoUsuarioFilaPar: {
+		fontWeight: 'bold',
+		backgroundColor: 'lightgrey'
 	},
 	btnSignOut: {
 		marginTop: 30,

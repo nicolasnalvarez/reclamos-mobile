@@ -7,9 +7,15 @@ export default class Reclamo extends Component {
 		super(props);
 	}
 
-	getImagenReclamo = imagePaths => {
-		if (imagePaths && imagePaths.length > 0) {
-			return imagePaths[0];
+	getImagenReclamo = imagesPaths => {
+		console.log('Entro al getImagenReclamo', imagesPaths);
+
+		if (
+			imagesPaths &&
+			imagesPaths.length > 0 &&
+			imagesPaths[0].startsWith('https://firebasestorage')
+		) {
+			return imagesPaths[0];
 		} else {
 			return 'https://www.todointeriores.com/wp-content/uploads/2019/04/Une-atmosphe%CC%80re-de%CC%81co-2019-Rivassoux-Murs-1-1.jpg';
 		}
@@ -22,6 +28,8 @@ export default class Reclamo extends Component {
 	};
 
 	render() {
+		console.log(this.props.navigation.state.params.reclamo.item.reclamo);
+
 		const {
 			estado,
 			nombreEdificio,
@@ -30,7 +38,7 @@ export default class Reclamo extends Component {
 			pisoUnidad,
 			ubicacion,
 			descripcion,
-			imagePaths
+			imagesPaths
 		} = this.props.navigation.state.params.reclamo.item.reclamo;
 
 		const listExtraInfo = [
@@ -46,7 +54,7 @@ export default class Reclamo extends Component {
 			<View style={styles.viewBody}>
 				<View style={styles.imageView}>
 					<Image
-						source={{ uri: this.getImagenReclamo(imagePaths) }}
+						source={{ uri: this.getImagenReclamo(imagesPaths) }}
 						PlaceholderContent={<ActivityIndicator />}
 						style={styles.imagenReclamo}
 					/>
@@ -83,7 +91,7 @@ const styles = StyleSheet.create({
 	},
 	imagenReclamo: {
 		width: '100%',
-		height: 200,
+		height: 300,
 		resizeMode: 'cover'
 	},
 	InfoReclamoView: {

@@ -92,20 +92,20 @@ const RootStack = createBottomTabNavigator(
 				)
 			})
 		},
-		Search: {
-			screen: searchScreenStack,
-			navigationOptions: ({ navigation }) => ({
-				tabBarLabel: 'Buscar',
-				tabBarIcon: ({ tintColor }) => (
-					<Icon
-						name='magnify'
-						type='material-community'
-						size={22}
-						color={tintColor}
-					/>
-				)
-			})
-		},
+		// Search: {
+		// 	screen: searchScreenStack,
+		// 	navigationOptions: ({ navigation }) => ({
+		// 		tabBarLabel: 'Buscar',
+		// 		tabBarIcon: ({ tintColor }) => (
+		// 			<Icon
+		// 				name='magnify'
+		// 				type='material-community'
+		// 				size={22}
+		// 				color={tintColor}
+		// 			/>
+		// 		)
+		// 	})
+		// },
 		MyAccount: {
 			screen: myAccountScreenStack,
 			navigationOptions: ({ navigation }) => ({

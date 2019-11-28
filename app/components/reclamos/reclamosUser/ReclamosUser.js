@@ -92,7 +92,11 @@ export default class ReclamosUser extends Component {
 	};
 
 	getImagenReclamo = imagesPaths => {
-		if (imagesPaths && imagesPaths.length > 0) {
+		if (
+			imagesPaths &&
+			imagesPaths.length > 0 &&
+			imagesPaths[0].startsWith('https://firebasestorage')
+		) {
 			return imagesPaths[0];
 		} else {
 			return 'https://www.todointeriores.com/wp-content/uploads/2019/04/Une-atmosphe%CC%80re-de%CC%81co-2019-Rivassoux-Murs-1-1.jpg';

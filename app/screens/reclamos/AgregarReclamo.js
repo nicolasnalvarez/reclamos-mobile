@@ -88,7 +88,7 @@ export default class AgregarReclamo extends Component {
 			idUnidad
 		} = this.state.formData;
 
-		if (URIImagenReclamo && ubicacion && descripcion) {
+		if ((URIImagenReclamo && ubicacion && descripcion, idEdificio, idUnidad)) {
 			this.setState({
 				loading: true
 			});
