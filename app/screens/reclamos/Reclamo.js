@@ -17,7 +17,7 @@ export default class Reclamo extends Component {
 
 	formatearZonaReclamo = zonaReclamo => {
 		if (zonaReclamo) {
-			return <Text style={styles.unidadReclamo}>Zona: {ubicacion}</Text>;
+			return <Text style={styles.unidadReclamo}>Zona: {zonaReclamo}</Text>;
 		}
 	};
 

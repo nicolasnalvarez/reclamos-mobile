@@ -145,8 +145,8 @@ export default class ReclamosUser extends Component {
 	};
 
 	formatDescription = description => {
-		if (description.length > 60) {
-			let formattedDescription = description.substr(0, 60) + '...';
+		if (description.length > 40) {
+			let formattedDescription = description.substr(0, 40) + '...';
 			return formattedDescription;
 		}
 		return description;

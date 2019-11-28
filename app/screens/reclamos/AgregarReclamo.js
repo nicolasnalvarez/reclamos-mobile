@@ -14,7 +14,7 @@ import { firebaseApp } from '../../utils/Firebase';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import config from '../../utils/Config';
-import Camara from './Camara';
+import { getUser } from '../../auth/Auth';
 
 const Form = t.form.Form;
 const db = firebase.firestore(firebaseApp);
@@ -26,12 +26,12 @@ export default class AgregarReclamo extends Component {
 		this.state = {
 			URIImagenReclamo: '',
 			formData: {
-				documento: '',
 				ubicacion: '',
 				descripcion: '',
 				idEdificio: null,
 				idUnidad: null
 			},
+			documento: '',
 			loading: false
 		};
 	}
@@ -81,80 +81,86 @@ export default class AgregarReclamo extends Component {
 
 	agregarReclamo = () => {
 		const { URIImagenReclamo } = this.state;
-		const { documento, ubicacion, descripcion } = this.state.formData;
+		const {
+			ubicacion,
+			descripcion,
+			idEdificio,
+			idUnidad
+		} = this.state.formData;
+		const { documento } = this.state;
 
 		if (URIImagenReclamo && ubicacion && descripcion) {
 			this.setState({
 				loading: true
 			});
-			const nuevoReclamoRequest = {
-				documento,
-				ubicacion,
-				descripcion
-			};
-			fetch(config.GENERAR_RECLAMO_PATH, {
-				method: 'POST',
-				body: JSON.stringify(nuevoReclamoRequest),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
-				.then(res => {
-					console.log(res);
+
+			getUser()
+				.then(user => {
+					this.setState({
+						documento: user.dni
+					});
 				})
 				.catch(err => {
 					console.log(err);
 				});
+			console.log('state actual: ', this.state.documento);
 
-			db.collection('reclamos')
-				.add({
-					documento,
-					ubicacion,
-					descripcion,
-					image: '',
-					createdAt: new Date()
-				})
-				.then(res => {
-					const restaurantId = res.id;
-
-					uploadImage(URIImagenReclamo, restaurantId, 'reclamos')
+			uploadImage(URIImagenReclamo, Date.now(), 'reclamos')
+				.then(URLImagen => {
+					const nuevoReclamoRequest = {
+						reclamo: {
+							documento: this.state.documento,
+							ubicacion: ubicacion,
+							descripcion: descripcion,
+							idEdificio: idEdificio,
+							idUnidad: idUnidad
+						},
+						imagenes: [
+							{
+								path: URLImagen,
+								tipo: 'imagen'
+							}
+						]
+					};
+					console.log(nuevoReclamoRequest);
+					fetch(config.GENERAR_RECLAMO_PATH, {
+						method: 'POST',
+						body: JSON.stringify(nuevoReclamoRequest),
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
 						.then(res => {
-							const restaurantRef = db.collection('reclamos').doc(restaurantId);
-
-							restaurantRef
-								.update({ image: res })
-								.then(() => {
-									this.setState({
-										loading: false
-									});
-									this.refs.toast.show(
-										'Restaurante creado correctamente',
-										100,
-										() => {
-											this.props.navigation.state.params.loadReclamos();
-											this.props.navigation.goBack();
-										}
-									);
-								})
-								.catch(err => {
-									this.refs.toast.show(err);
-									this.setState({
-										loading: false
-									});
-								});
+							if (res.status != 201) {
+								this.refs.toast.show(
+									'Los datos ingresados en el formulario son incorrectos'
+								);
+							} else {
+								return res.json();
+							}
 						})
-						.catch(err => {
-							this.refs.toast.show('Error del servidor');
+						.then(idReclamo => {
 							this.setState({
 								loading: false
 							});
+							this.refs.toast.show(
+								'Reclamo N° ' + idReclamo + ' creado correctamente',
+								100,
+								() => {
+									this.props.navigation.state.params.loadReclamos();
+									this.props.navigation.goBack();
+								}
+							);
+						})
+						.catch(err => {
+							this.setState({ loading: false });
+							console.log(err);
 						});
 				})
 				.catch(err => {
-					this.refs.toast.show('Error del servidor');
-					this.setState({
-						loading: false
-					});
+					this.refs.toast.show(
+						'Hubo un problema al intentar subir la imagen a Firebase'
+					);
 				});
 		} else {
 			this.refs.toast.show('Tienes que llenar todos los campos');
